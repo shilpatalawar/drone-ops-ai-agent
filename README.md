@@ -1,52 +1,43 @@
-# 🚁 Drone Operations Coordinator AI Agent
+# Drone Ops AI Agent
 
 ## Overview
+This project is an AI-powered operations agent for assigning pilots and drones to missions based on availability, location, priority, and conflict rules.
 
-This project implements an AI-powered backend agent for coordinating drone operations, including pilot assignment, drone inventory management, conflict detection, and urgent reassignment handling.
+It exposes a FastAPI backend to allow conversational and API-based interaction for mission assignment and resource management.
 
-The system simulates real-world drone operations coordination and is designed to reduce manual coordination effort by automating decision-making based on availability, skills, location, and mission priority.
+## Architecture
+- FastAPI – API Layer
+- Pandas – CSV data loading
+- SQLite – Assignment logging
+- Rule-based optimization logic
+- Modular components for conflicts and urgent reassignment
 
----
+## Project Structure
 
-## Key Features
+agent.py        - Core assignment logic  
+main.py         - FastAPI app  
+data_loader.py  - CSV data loaders  
+conflict.py     - Conflict detection  
+urgent.py       - Urgent reassignment logic  
+optimizer.py    - Optimization logic  
+db.py            - SQLite logging  
+models.py        - Pydantic models  
+*.csv            - Pilot, drone, mission data  
 
-- Pilot roster querying by skill and location
-- Drone fleet querying by capability and location
-- Mission assignment with JSON-based API
-- Conflict detection (double booking, skill mismatch, maintenance issues)
-- Urgent reassignment handling for high-priority missions
-- Assignment logging for audit and traceability
-- SQLite database for assignment history
-- Interactive Swagger UI for testing
+## How to Run Locally
 
----
+```bash
+pip install -r requirements.txt
+uvicorn main:app --reload
 
-## Tech Stack
-
-- Python 3.10+
-- FastAPI
-- Pydantic
-- Pandas
-- SQLite
-- Uvicorn
-
----
-
-## How to Run
-
-1. Activate virtual environment:venv\Scripts\activate
-
-2. Install dependencies:pip install -r requirements.txt
-
-3. Start server:uvicorn main:app --reload
 
 ---
 
 ## API Testing
 
 Open in browser:
-
 http://127.0.0.1:8000/docs
+
 
 Use POST /assign to assign pilots and drones to missions.
 
@@ -56,3 +47,25 @@ Use POST /assign to assign pilots and drones to missions.
 
 Developed as part of a technical assignment to demonstrate AI-driven drone operations coordination.
 
+
+
+
+
+
+## Architecture Overview
+
+This system is built using FastAPI and deployed on Render. Google Sheets is used as the external data source for pilots, drones, and missions.
+
+### Components
+- FastAPI backend for APIs and conversational interface
+- Google Sheets for live pilot, drone, and mission data
+- Agent logic for assignment, conflict detection, and urgent handling
+
+### Data Flow
+User → FastAPI API → Google Sheets (Read) → Agent Logic → Response
+
+### Conversational Interface
+Users can interact with the system using the `/chat` endpoint with natural language-style commands such as:
+- "Show available pilots"
+- "Trigger urgent reassignment"
+- "Check conflicts"
